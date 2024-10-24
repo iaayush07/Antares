@@ -18,11 +18,11 @@ export function App() {
       header={{ height: 60 }}
       footer={{ height: 60 }}
       navbar={{ width: 300, breakpoint: "sm"}}
-      aside={{
-        width: 300,
-        breakpoint: "md",
-        collapsed: { desktop: false, mobile: true },
-      }}
+      // aside={{
+      //   width: 300,
+      //   breakpoint: "md",
+      //   collapsed: { desktop: false, mobile: true },
+      // }}
     >
       <AppShell.Header>
         <Group h="100%" px="md" py="sm">
@@ -32,7 +32,7 @@ export function App() {
       <AppShell.Navbar>
         <Sidebar />
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main bg="#F5F6F8">
         <Routes>
           <Route path="/" element={<TeamWorkItems />} />
           <Route path="/my-work-items" element={<MyWorkItems />} />
