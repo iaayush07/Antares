@@ -1,7 +1,16 @@
 import { Table, Paper, Text, Select, Image, Flex } from "@mantine/core";
 import DownArrowIcon from "../assets/icons/down-arrow.svg";
 import LockedIcon from "../assets/icons/locked.svg";
+import MediaFileIcon from "../assets/icons/media-file.svg";
+import DocIcon from "../assets/icons/img-file.svg";
+import SettingIcon from "../assets/icons/setting.svg";
+import HandIcon from "../assets/icons/hand.svg";
+import DragDropIcon from '../assets/icons/DragDrop.svg'
+import ExcelFileIcon from "../assets/icons/sheet-file.svg";
+import EmailIcon from '../assets/icons/email.svg'
 const TableList = ({ data }) => {
+  console.log(data);
+
   const thList = [
     "Task No",
     "Task / Deliverable",
@@ -33,19 +42,58 @@ const TableList = ({ data }) => {
         return {};
     }
   };
+  const getFileIcons = (fileTypes) => {
+    return fileTypes.map((fileType, index) => {
+      switch (fileType) {
+        case "document":
+          return (
+            <Image key={index} src={MediaFileIcon} w="20px" h="20px" mx="5px" />
+          );
+        case "excel":
+          return <Image key={index} src={DocIcon} w="20px" h="20px" mx="5px" />;
+        case "media":
+          return (
+            <Image key={index} src={ExcelFileIcon} w="20px" h="20px" mx="5px" />
+          );
+        case "email":
+          return (
+            <Image key={index} src={EmailIcon} w="25px" h="15px" mx="5px" />
+          );
+        default:
+          return null;
+      }
+    });
+  };
   const rows = data.map((task) => (
     <Table.Tr
       key={task.id}
       className="text-secondary"
-      style={{ fontWeight: "500" }}
+      border= "1px solid red"
+      style={{ fontWeight: "500",
+        background: task.isLock ? "rgba(216, 98, 92, 0.1)" : ''
+       }}
     >
       <Table.Td style={{ borderRight: "1px solid #ddd" }}>
-        {task.taskNo}
+        <Flex align="center" justify="space-between">
+          <Image src={DragDropIcon} alt="drag-drop" w="20px" h="20px" mr="10px"></Image>
+          <Text className="text-nowrap">{task.taskNo}</Text>
+        </Flex>
       </Table.Td>
       <Table.Td style={{ borderRight: "1px solid #ddd" }}>
-        <Flex justify="space-between">
-          <Text>{task.taskName}</Text>
-          {task.isLock ? <Image src={LockedIcon} w="20px" h="20px" ml="10px" /> : '' }
+        <Flex justify="space-between" align="center">
+          <Flex align="center">
+            <Image
+              src={task.isSetting ? SettingIcon : HandIcon}
+              alt="task_icon"
+              w="20px"
+              h="20px"
+              me="10px"
+            />
+            <Text>{task.taskName}</Text>
+          </Flex>
+          {task.isLock && (
+            <Image src={LockedIcon} w="20px" h="20px" ml="10px" />
+          )}
         </Flex>
       </Table.Td>
       <Table.Td style={{ borderRight: "1px solid #ddd" }}>
@@ -56,6 +104,8 @@ const TableList = ({ data }) => {
             "Matthew Melo",
             "Gerardo Minton",
             "Helen Baxter",
+            "Ronny Smith",
+            "David Brown"
           ]}
           rightSection={<Image src={DownArrowIcon} h="6px" />}
           defaultValue={task.dealTeamMember}
@@ -79,7 +129,11 @@ const TableList = ({ data }) => {
         {task.personnel}
       </Table.Td>
       <Table.Td style={{ borderRight: "1px solid #ddd" }}>
-        {task.fileType.length > 0 ? task.fileType.join(", ") : "N/A"}
+        {task.fileType?.length > 0 ? (
+          <Flex justify="center">{getFileIcons(task.fileType)}</Flex>
+        ) : (
+          ""
+        )}
       </Table.Td>
       <Table.Td style={{ borderRight: "1px solid #ddd" }}>
         {task.targetDate}

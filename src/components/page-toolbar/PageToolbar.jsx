@@ -18,14 +18,18 @@ const PageToolbar = ({autoCompleteData}) => {
   //   deal.name.toLowerCase().includes(searchQuery.toLowerCase())
   // );
 
+  const filteredData = autoCompleteData.filter((item) =>
+    item.toLowerCase().includes(searchQuery.toLowerCase()) || searchQuery === ""
+  );
+
   return (
     <Box>
       <Group justify="flex-end" mb="lg">
         <Autocomplete
           placeholder="Search"
+          data={filteredData}
           value={searchQuery}
-          data={autoCompleteData}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(value) => setSearchQuery(value)}
           leftSection={<Image src={SearchIcon} h="16px" />}
         />
         <Button variant="filled" radius="md" >

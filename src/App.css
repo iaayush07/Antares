@@ -4,3 +4,6 @@
 .text-gray{
   color: #788693;
 }
+.text-nowrap{
+  white-space: nowrap;
+}
